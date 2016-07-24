@@ -6,8 +6,10 @@ import { OAuthService } from './services/oAuth.service'
     selector: 'my-app',
     directives: [ROUTER_DIRECTIVES],
     template: `<h1>IFAR Extranet Application</h1>
-               <button (click)="login()">Login</button>
-               
+
+                <button *ngIf!="_oAuth.IsAuthorized" (click)="login()">Login</button>
+                <button *ngIf="_oAuth.IsAuthorized" (click)="logout()">Logout</button>
+
                <router-outlet></router-outlet>`
 })
 export class AppComponent implements OnInit {
@@ -30,5 +32,9 @@ export class AppComponent implements OnInit {
 
     login() {
         this._oAuth.Authorize();
+    }
+
+    logout() {
+        this._oAuth.Logoff();
     }
  }

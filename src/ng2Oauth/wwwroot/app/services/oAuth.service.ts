@@ -7,6 +7,10 @@ export class OAuthService {
 
     constructor(private _appConfig: AppConfig) {
         this.storage = localStorage;
+
+        if (this.retrieve("IsAuthorized") !== "") {
+            this.IsAuthorized = this.retrieve("IsAuthorized");
+        }
     }
 
     ResetAuthorizationData() {
@@ -113,6 +117,25 @@ export class OAuthService {
         else {
             this.ResetAuthorizationData();
         }
+    }
+
+    public Logoff() {
+        // /connect/endsession?id_token_hint=...&post_logout_redirect_uri=https://myapp.com
+        console.log("BEGIN Authorize, no auth data");
+
+        var authorizationUrl = this._appConfig.authorizationEndSessionUrl;
+
+        var id_token_hint = this.retrieve("authorizationDataIdToken");
+        var post_logout_redirect_uri = this._appConfig.redirectPostLogout_uri;
+
+        var url =
+            authorizationUrl + "?" +
+            "id_token_hint=" + encodeURI(id_token_hint) + "&" +
+            "post_logout_redirect_uri=" + encodeURI(post_logout_redirect_uri);
+
+        this.ResetAuthorizationData();
+
+        window.location.href = url;
     }
 
     private urlBase64Decode(str) {
