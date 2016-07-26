@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { OAuthService } from './services/oAuth.service'
+import { OAuthService } from './services/oAuth.service';
+import { ApiService } from './services/api.service';
 
 @Component({
     selector: 'my-app',
     directives: [ROUTER_DIRECTIVES],
+    providers: [ApiService],
     template: `<h1>IFAR Extranet Application</h1>
 
                 <button *ngIf!="_oAuth.IsAuthorized" (click)="login()">Login</button>
                 <button *ngIf="_oAuth.IsAuthorized" (click)="logout()">Logout</button>
-
+                <button *ngIf="_oAuth.IsAuthorized" (click)="getApi()">Get Api</button>
+                {{values}}
                <router-outlet></router-outlet>`
 })
 export class AppComponent implements OnInit {
     hash:string;
+    values: string[];
+    errorMessage: string;
 
-    constructor(private _oAuth:OAuthService, private _router: Router) { }
+    constructor(private _oAuth:OAuthService, private _router: Router, private _api:ApiService) { }
 
     ngOnInit() {
         //this works
@@ -36,5 +41,14 @@ export class AppComponent implements OnInit {
 
     logout() {
         this._oAuth.Logoff();
+    }
+
+    getApi() {
+        console.log("getApi started");
+
+        this._api.getApi()
+            .subscribe(
+            values => this.values = values,
+            error => this.errorMessage = error);
     }
  }

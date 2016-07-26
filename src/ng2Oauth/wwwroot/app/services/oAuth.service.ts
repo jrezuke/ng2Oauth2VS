@@ -13,6 +13,10 @@ export class OAuthService {
         }
     }
 
+    public GetToken(): any {
+        return this.retrieve("authorizationData");
+    }
+    
     ResetAuthorizationData() {
         this.store("authorizationData", "");
         this.store("authorizationDataIdToken", "");
