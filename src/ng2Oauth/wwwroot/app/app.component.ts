@@ -17,7 +17,7 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent implements OnInit {
     hash:string;
-    values: string[];
+    public values: string[];
     errorMessage: string;
 
     constructor(private _oAuth:OAuthService, private _router: Router, private _api:ApiService) { }
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
         this._api.getApi()
             .subscribe(
-            values => this.values = values,
+            data => { this.values = data},
             error => this.errorMessage = error);
     }
  }
