@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AppConfig } from '../app.config'
+import { AppConfig } from '../app.config';
+
 @Injectable()
 export class OAuthService {
     public IsAuthorized: boolean;
@@ -16,7 +17,7 @@ export class OAuthService {
     public GetToken(): any {
         return this.retrieve("authorizationData");
     }
-    
+
     ResetAuthorizationData() {
         this.store("authorizationData", "");
         this.store("authorizationDataIdToken", "");
