@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Jsonp, Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 //import {Observable} from 'rxjs/Rx';
-//import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map';
 import { OAuthService } from './oAuth.service';
 import { AppConfig } from '../app.config';
 import { Claim } from '../admin/claim.class'
+
 @Injectable()
 export class ApiService {
     private apiUrl: string;
@@ -31,7 +32,7 @@ export class ApiService {
         //     .map(res => res.json());
              //.subscribe(resp => console.log("response:", resp.json() ));
         return this.http.get(this.apiUrl, this.requestOpts)
-           .map(res => res.json():Claim);
+           .map(res => res.json());
     }
 
 }
